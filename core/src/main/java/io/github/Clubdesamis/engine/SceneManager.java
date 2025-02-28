@@ -1,23 +1,27 @@
-package io.github.Clubdesamis;
+package io.github.Clubdesamis.engine;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
+import io.github.Clubdesamis.engine.Scene;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.*;
 
-public class SceneManager {
+public class SceneManager implements Disposable {
 
-private Hashtable<String, Scene> scenes;
+private HashMap<String, Scene> scenes;
 private ArrayList<Scene> sceneStack;
 
 public SceneManager(){
-    scenes = new Hashtable<String, Scene>();
+    scenes = new HashMap<String, Scene>();
     sceneStack = new ArrayList<Scene>();
 }
 
 public void addScene(Scene scene){
     scenes.put(scene.getName(), scene);
+}
 
+public void removeScene(Scene scene){
+    scenes.remove(scene);
 }
 
 public void pushScene(String name) throws Exception{
@@ -32,7 +36,7 @@ public void pushScene(String name) throws Exception{
 
 public void pop(){
     if(sceneStack.size() > 0){
-        sceneStack.get(sceneStack.size() - 1).close();
+        sceneStack.get(sceneStack.size() - 1).dispose();
         sceneStack.remove(sceneStack.size() - 1);
     }
 }
@@ -53,4 +57,14 @@ public void render(SpriteBatch batch){
     }
 }
 
+    @Override
+    public void dispose() {
+        Iterator<HashMap.Entry<String, Scene>> it = scenes.entrySet().iterator();
+        while(it.hasNext()){
+            HashMap.Entry<String, Scene> entry = it.next();
+            entry.getValue().dispose();
+            it.remove();
+        }
+        sceneStack.clear();
+    }
 }

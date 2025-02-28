@@ -1,7 +1,8 @@
-package io.github.Clubdesamis;
+package io.github.Clubdesamis.engine;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 
-public abstract class Scene {
+public abstract class Scene implements Disposable {
 
     private String name;
 
@@ -10,8 +11,6 @@ public abstract class Scene {
     }
 
     public abstract void init();
-
-    public abstract void close();
 
     public abstract boolean update();
 
