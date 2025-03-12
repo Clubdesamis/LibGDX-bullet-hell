@@ -21,7 +21,7 @@ public class TestScene extends Scene {
 
         textureManager = new RessourceManager();
 
-        textureManager.addDir("./Textures", true);
+        textureManager.addDir("./Textures/", true);
 
     }
     public void init(){

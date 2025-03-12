@@ -38,6 +38,10 @@ public class RessourceManager implements Disposable {
     public void addDir(String relPath, boolean doRecursion){
         File directory = new File(relPath);
         File[] files = directory.listFiles();
+        String[] fileNames = new String[files.length];
+        for(int i = 0; i < files.length; i++){
+            fileNames[i] = StringUtils.getSanitizedFileName(files[i].getName());
+        }
 
         for(int i = 0; i < files.length; i++){
             String fileFormat = StringUtils.getFileExtension(files[i].getName());
